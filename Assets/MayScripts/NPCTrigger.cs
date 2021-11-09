@@ -6,6 +6,7 @@ public class NPCTrigger : MonoBehaviour
 {
     bool listen = false;
     bool listenH = false;
+    public GameObject listenObject;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +35,7 @@ public class NPCTrigger : MonoBehaviour
     {
         if (collision.name == "Player")
         {
+            
             listen = false;
             listenH = false;
         }
@@ -41,7 +43,12 @@ public class NPCTrigger : MonoBehaviour
 
     private void listenNPC()
     {
-        Debug.Log("listen");
-        
+        if (listen)
+        {
+            Debug.Log("listen");
+            GameObject newListener = Instantiate(listenObject, transform.position, transform.rotation);
+            newListener.transform.SetParent(gameObject.transform);
+            //newBall.transform.localPosition = new Vector3(dir * 1f, -0.1f); ///local position relative to player
+        }
     }
 }
