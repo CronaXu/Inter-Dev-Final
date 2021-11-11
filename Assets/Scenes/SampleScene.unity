@@ -182,13 +182,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.9716981, g: 0.8506213, b: 0.56376827, a: 1}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 21300000, guid: fad58830d11d54ac5b621d283af32662, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 1.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -202,7 +202,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224297376}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.4, z: 0}
+  m_LocalPosition: {x: -0.02, y: -0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -242,18 +242,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0050648153, y: -0.055713177}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 1, y: 1.25}
+    newSize: {x: 1, y: 1.25}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.5441657, y: 1.1114261}
   m_EdgeRadius: 0
 --- !u!114 &224297381
 MonoBehaviour:
@@ -270,6 +270,10 @@ MonoBehaviour:
   speed: 8
   jumpHeight: 25
   gravityMultiplier: 2
+  npcPosX: 0
+  record: 0
+  disableMove: 0
+  convMove: 0
 --- !u!1 &300455048
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,6 +620,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc5f7e57a26740e697210ce7823eee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  listened: 0
+  listenObject: {fileID: 5006401023474622672, guid: 47bcffc78863a469bb6c1a4641b9fa33, type: 3}
+  convTriggered: 0
+  player: {fileID: 224297376}
 --- !u!1 &642082931
 GameObject:
   m_ObjectHideFlags: 0

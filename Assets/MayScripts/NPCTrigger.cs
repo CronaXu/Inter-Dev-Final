@@ -9,6 +9,7 @@ public class NPCTrigger : MonoBehaviour
     public bool listened = false;
     public GameObject listenObject;
     public bool convTriggered = false;
+    [SerializeField] GameObject player;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +31,9 @@ public class NPCTrigger : MonoBehaviour
             {
                 convTriggered = true;
                 Debug.Log("convTriggered");
+                player.GetComponent<PlayerMove>().disableMove = true;
+                player.GetComponent<PlayerMove>().convMove = true;
+                player.GetComponent<PlayerMove>().npcPosX  = transform.position.x;
             }
         }
     }
