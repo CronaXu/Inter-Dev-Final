@@ -153,7 +153,7 @@ public class Dialogue : MonoBehaviour
                 //FindObjectOfType<playerMove>().jumpHeight = 0;
                 if (sentences.Count == 0)   //if queue empty, end dialogue
                 {
-
+                    StopAllCoroutines();
                     EndDialogue();
                     return;
                 }
