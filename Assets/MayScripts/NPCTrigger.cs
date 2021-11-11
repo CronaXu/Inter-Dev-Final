@@ -6,7 +6,9 @@ public class NPCTrigger : MonoBehaviour
 {
     bool listen = false;
     bool listenH = false;
+    public bool listened = false;
     public GameObject listenObject;
+    public bool convTriggered = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,8 +20,17 @@ public class NPCTrigger : MonoBehaviour
     {
         if(!listenH && listen)
         {
-            Invoke("listenNPC", 2);
+            Invoke("listenNPC", 1);
             listenH = true;
+        }
+
+        if (listened)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                convTriggered = true;
+                Debug.Log("convTriggered");
+            }
         }
     }
 
@@ -35,9 +46,12 @@ public class NPCTrigger : MonoBehaviour
     {
         if (collision.name == "Player")
         {
-            
             listen = false;
             listenH = false;
+            if (!convTriggered)
+            {
+                listened = false;
+            }
         }
     }
 
@@ -48,7 +62,8 @@ public class NPCTrigger : MonoBehaviour
             Debug.Log("listen");
             GameObject newListener = Instantiate(listenObject, transform.position, transform.rotation);
             newListener.transform.SetParent(gameObject.transform);
-            //newBall.transform.localPosition = new Vector3(dir * 1f, -0.1f); ///local position relative to player
+            newListener.transform.localPosition = new Vector3( 0f, 0.9f); ///local position relative to player
+            listened = true;
         }
     }
 }
