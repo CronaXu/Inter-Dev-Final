@@ -8,6 +8,7 @@ public class Dialogue : MonoBehaviour
 {
 
     //[SerializeField] Dialogue dialogue;
+    [TextArea(3, 10)]
     [SerializeField] string[] Text;
     //[SerializeField] TMP_Text nameText;
     [SerializeField] TMP_Text dialogueText;
@@ -21,7 +22,7 @@ public class Dialogue : MonoBehaviour
     public bool dialogue2Complete = false;
     [SerializeField] GameObject player;
 
-
+  
     [SerializeField] Queue<string> sentences;
     //[SerializeField] Queue<string> names; //a list of strings
     //[SerializeField] Queue<Sprite> avatars;
@@ -138,6 +139,8 @@ public class Dialogue : MonoBehaviour
                                                 //textboxSprite.gameObject.SetActive(true);
                 //nameText.text = name;
                 dialogueText.text = sentence;
+                StopAllCoroutines();
+                StartCoroutine(TypeSentence(sentence));
                 //avatarSprite.GetComponent<Image>().sprite = avatar;
                 //textboxSprite.GetComponent<Image>().sprite = textbox;   //input sprite/string onto placeholders in canvas
                 Debug.Log(name);
@@ -154,9 +157,12 @@ public class Dialogue : MonoBehaviour
                     EndDialogue();
                     return;
                 }
-
+               
                 //string name2 = names.Dequeue();
                 string sentence2 = sentences.Dequeue();
+                dialogueText.text = sentence2;
+                StopAllCoroutines();
+                StartCoroutine(TypeSentence(sentence2));
                 //Sprite avatar2 = avatars.Dequeue();
                 //Sprite textbox2 = textboxs.Dequeue();    //go down list and put into a sprite/string
                 //avatarSprite.enabled = true;
@@ -164,12 +170,22 @@ public class Dialogue : MonoBehaviour
                 //avatarSprite.gameObject.SetActive(true);
                 //textboxSprite.gameObject.SetActive(true);
                 //nameText.text = name2;
-                dialogueText.text = sentence2;
+                
                 //avatarSprite.GetComponent<Image>().sprite = avatar2;
                 //textboxSprite.GetComponent<Image>().sprite = textbox2;   //input sprite/string onto placeholders in canvas
                 //Debug.Log(name2);
                 Debug.Log(sentence2);
             }
+        }
+    }
+
+    IEnumerator TypeSentence(string sentence)
+    {
+        dialogueText.text = "";
+        foreach (char letter in sentence.ToCharArray())
+        {
+            dialogueText.text += letter;
+            yield return null;
         }
     }
 
