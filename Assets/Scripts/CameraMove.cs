@@ -42,7 +42,7 @@ public class CameraMove : MonoBehaviour
     void FixedUpdate()
     {
         camY = Mathf.Clamp(followTransform.position.y + 2f, yMin + camSize, yMax - camSize);
-        camX = Mathf.Clamp(followTransform.position.x + 3f, xMin + camRatio, xMax - camRatio);
+        camX = Mathf.Clamp(followTransform.position.x + 0, xMin + camRatio, xMax - camRatio);
 
         smoothPos = Vector3.Lerp(gameObject.transform.position, new Vector3(camX, camY, gameObject.transform.position.z), smoothRate);
         gameObject.transform.position = smoothPos;
