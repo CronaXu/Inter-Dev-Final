@@ -8,6 +8,7 @@ public class PlayerMove : MonoBehaviour
     public float jumpHeight;
     public float gravityMultiplier;
     bool onFloor;
+    bool canJump;
 
     public float npcPosX;
     float myPosX;
@@ -47,23 +48,29 @@ public class PlayerMove : MonoBehaviour
 
     void CheckKeys()
     {
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             myRenderer.flipX = false;
             HandleLRMovement(speed);
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.LeftArrow))
         {
             myRenderer.flipX = true;
             HandleLRMovement(-speed);
 
         }
 
+        if (Input.GetKeyUp(KeyCode.Z))
+        {
+            canJump = true;
+        }
 
-        if (Input.GetKey(KeyCode.W) && onFloor)
+
+        if (Input.GetKey(KeyCode.Z) && onFloor && canJump)
         {
             myBody.velocity = new Vector3(myBody.velocity.x, jumpHeight);
 
+            canJump = false;
         }
         
     }
@@ -105,6 +112,9 @@ public class PlayerMove : MonoBehaviour
             
 
             myBody.velocity = new Vector3(myBody.velocity.x, 0);
+
+            
+
         }
 
     }
