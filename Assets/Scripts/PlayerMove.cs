@@ -63,6 +63,10 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Z))
         {
             canJump = true;
+            if (myBody.velocity.y > 0)
+            {
+                myBody.velocity = new Vector3(myBody.velocity.x, 0);
+            }
         }
 
 

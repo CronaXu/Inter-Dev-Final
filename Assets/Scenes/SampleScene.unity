@@ -1028,7 +1028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 12
-  jumpHeight: 31
+  jumpHeight: 33
   gravityMultiplier: 2
   npcPosX: 0
   disableMove: 0
