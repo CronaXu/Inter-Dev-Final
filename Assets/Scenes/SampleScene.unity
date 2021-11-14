@@ -1030,6 +1030,7 @@ MonoBehaviour:
   speed: 12
   jumpHeight: 33
   gravityMultiplier: 2
+  dashSpeed: 24
   npcPosX: 0
   disableMove: 0
   convMove: 0

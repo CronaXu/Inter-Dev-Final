@@ -7,8 +7,19 @@ public class PlayerMove : MonoBehaviour
     public float speed;
     public float jumpHeight;
     public float gravityMultiplier;
+    public float dashSpeed;
+
     bool onFloor;
     bool canJump;
+    bool canDash;
+   
+    int dashCd;
+
+    
+    bool isDashing;
+
+    
+    
 
     public float npcPosX;
     float myPosX;
@@ -26,6 +37,7 @@ public class PlayerMove : MonoBehaviour
     {
         myBody = gameObject.GetComponent<Rigidbody2D>();
         myRenderer = gameObject.GetComponent<SpriteRenderer>();
+        
     }
 
     // Update is called once per frame
@@ -44,16 +56,29 @@ public class PlayerMove : MonoBehaviour
         {
             HandleConvMove();
         }
+        if (dashCd > 0)
+        {
+            dashCd--;
+        }
+        if (!onFloor)
+        {
+            speed = 10.5f;
+        }
+        else
+        {
+            speed = 12;
+        }
+        
     }
 
     void CheckKeys()
     {
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow) && !isDashing)
         {
             myRenderer.flipX = false;
             HandleLRMovement(speed);
         }
-        else if (Input.GetKey(KeyCode.LeftArrow))
+        else if (Input.GetKey(KeyCode.LeftArrow) && !isDashing)
         {
             myRenderer.flipX = true;
             HandleLRMovement(-speed);
@@ -70,13 +95,46 @@ public class PlayerMove : MonoBehaviour
         }
 
 
-        if (Input.GetKey(KeyCode.Z) && onFloor && canJump)
+        if (Input.GetKey(KeyCode.Z) && onFloor && canJump && !isDashing)
         {
             myBody.velocity = new Vector3(myBody.velocity.x, jumpHeight);
 
             canJump = false;
         }
-        
+
+        if (onFloor)
+        {
+            if (Input.GetKeyDown(KeyCode.C) && dashCd == 0)
+            {
+                if (!myRenderer.flipX)
+                {
+                    StartCoroutine(Dash(1));
+
+                }
+                else
+                {
+                    StartCoroutine(Dash(-1));
+                }
+                dashCd = 15;
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.C) && canDash)
+            {
+                if (!myRenderer.flipX)
+                {
+                    StartCoroutine(Dash(1));
+
+                }
+                else
+                {
+                    StartCoroutine(Dash(-1));
+                }
+                canDash = false;
+            }
+        }
+
     }
 
     void JumpPhysics()
@@ -90,6 +148,19 @@ public class PlayerMove : MonoBehaviour
     void HandleLRMovement(float dir)
     {
         myBody.velocity = new Vector3(dir, myBody.velocity.y);
+    }
+
+
+    IEnumerator Dash(float dir)
+    {
+        isDashing = true;
+        myBody.velocity = new Vector2(dashSpeed * dir, 0f);
+        
+        float gravity = myBody.gravityScale;
+        myBody.gravityScale = 0;
+        yield return new WaitForSeconds(0.16f);
+        isDashing = false;
+        myBody.gravityScale = gravity;
     }
 
 
@@ -113,7 +184,7 @@ public class PlayerMove : MonoBehaviour
         if (collision.gameObject.tag == "floor")
         {
             onFloor = true;
-            
+            canDash = true;
 
             myBody.velocity = new Vector3(myBody.velocity.x, 0);
 
