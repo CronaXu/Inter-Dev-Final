@@ -17,6 +17,7 @@ public class PlayerMove : MonoBehaviour
 
     
     bool isDashing;
+    bool hasJumpedOnce;
 
     
     
@@ -62,7 +63,7 @@ public class PlayerMove : MonoBehaviour
         }
         if (!onFloor)
         {
-            speed = 10.5f;
+            speed = 10f;
         }
         else
         {
@@ -100,7 +101,17 @@ public class PlayerMove : MonoBehaviour
             myBody.velocity = new Vector3(myBody.velocity.x, jumpHeight);
 
             jumpKeyReleased = false;
+            hasJumpedOnce = true;
         }
+
+        if (Input.GetKey(KeyCode.Z) && hasJumpedOnce && jumpKeyReleased && !isDashing)   //double jump conditions
+        {
+            myBody.velocity = new Vector3(myBody.velocity.x, jumpHeight);
+
+            jumpKeyReleased = false;
+            hasJumpedOnce = false;
+        }
+
 
         if (onFloor)    //dash conditions when on floor
         {
@@ -159,6 +170,7 @@ public class PlayerMove : MonoBehaviour
         float gravity = myBody.gravityScale;
         myBody.gravityScale = 0;
         yield return new WaitForSeconds(0.16f);
+        myBody.velocity = new Vector2(0f, 0f);
         isDashing = false;
         myBody.gravityScale = gravity;
     }
@@ -185,6 +197,7 @@ public class PlayerMove : MonoBehaviour
         {
             onFloor = true;
             canDash = true;
+            hasJumpedOnce = false;
 
             myBody.velocity = new Vector3(myBody.velocity.x, 0);
 
