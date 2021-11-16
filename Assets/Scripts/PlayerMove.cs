@@ -10,7 +10,7 @@ public class PlayerMove : MonoBehaviour
     public float dashSpeed;
 
     bool onFloor;
-    bool canJump;
+    bool jumpKeyReleased;
     bool canDash;
    
     int dashCd;
@@ -73,7 +73,7 @@ public class PlayerMove : MonoBehaviour
 
     void CheckKeys()
     {
-        if (Input.GetKey(KeyCode.RightArrow) && !isDashing)
+        if (Input.GetKey(KeyCode.RightArrow) && !isDashing)     //left right movement
         {
             myRenderer.flipX = false;
             HandleLRMovement(speed);
@@ -85,9 +85,9 @@ public class PlayerMove : MonoBehaviour
 
         }
 
-        if (Input.GetKeyUp(KeyCode.Z))
+        if (Input.GetKeyUp(KeyCode.Z))   //fall when jump key released
         {
-            canJump = true;
+            jumpKeyReleased = true;
             if (myBody.velocity.y > 0)
             {
                 myBody.velocity = new Vector3(myBody.velocity.x, 0);
@@ -95,14 +95,14 @@ public class PlayerMove : MonoBehaviour
         }
 
 
-        if (Input.GetKey(KeyCode.Z) && onFloor && canJump && !isDashing)
+        if (Input.GetKey(KeyCode.Z) && onFloor && jumpKeyReleased && !isDashing)   //jump conditions
         {
             myBody.velocity = new Vector3(myBody.velocity.x, jumpHeight);
 
-            canJump = false;
+            jumpKeyReleased = false;
         }
 
-        if (onFloor)
+        if (onFloor)    //dash conditions when on floor
         {
             if (Input.GetKeyDown(KeyCode.C) && dashCd == 0)
             {
@@ -118,7 +118,7 @@ public class PlayerMove : MonoBehaviour
                 dashCd = 15;
             }
         }
-        else
+        else     //dash conditions when in the air
         {
             if (Input.GetKeyDown(KeyCode.C) && canDash)
             {
@@ -137,7 +137,7 @@ public class PlayerMove : MonoBehaviour
 
     }
 
-    void JumpPhysics()
+    void JumpPhysics()    //gravity multiplier
     {
         if (myBody.velocity.y < 0)
         {
@@ -145,13 +145,13 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    void HandleLRMovement(float dir)
+    void HandleLRMovement(float dir)     //left right movement
     {
         myBody.velocity = new Vector3(dir, myBody.velocity.y);
     }
 
 
-    IEnumerator Dash(float dir)
+    IEnumerator Dash(float dir)    //dash codes
     {
         isDashing = true;
         myBody.velocity = new Vector2(dashSpeed * dir, 0f);
@@ -181,7 +181,7 @@ public class PlayerMove : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (collision.gameObject.tag == "floor")
+        if (collision.gameObject.tag == "floor")    //check if is on floor
         {
             onFloor = true;
             canDash = true;
