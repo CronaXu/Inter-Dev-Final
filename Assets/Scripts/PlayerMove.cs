@@ -206,7 +206,7 @@ public class PlayerMove : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (collision.gameObject.tag == "floor")    //check if is on floor
+        /*if (collision.gameObject.tag == "floor")    //check if is on floor
         {
             onFloor = true;
             canDash = true;
@@ -214,9 +214,7 @@ public class PlayerMove : MonoBehaviour
 
             myBody.velocity = new Vector3(myBody.velocity.x, 0);
 
-            
-
-        }
+        }*/
 
     }
 
@@ -248,13 +246,7 @@ public class PlayerMove : MonoBehaviour
                 //canDash = true;
             }
         }
-        else
-        {
-            Debug.Log("can't jump");
-            onFloor = false;
-            //canDash = true;
-        }
-        //}
+
     }
 
 }
