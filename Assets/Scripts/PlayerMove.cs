@@ -33,6 +33,14 @@ public class PlayerMove : MonoBehaviour
     SpriteRenderer myRenderer;
 
 
+    //public float test = 3;
+    public float rayDis = 1;
+    public Transform rayCastOrigin;
+    float jumpTimer = 0;
+    public float theTimer;
+    public bool canJump = true;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,7 +77,12 @@ public class PlayerMove : MonoBehaviour
         {
             speed = 12;
         }
-        
+
+        if (jumpTimer > 0)
+        {
+            jumpTimer -= Time.deltaTime;            //reset jumpTimer
+        }
+
     }
 
     void CheckKeys()
@@ -205,6 +218,43 @@ public class PlayerMove : MonoBehaviour
 
         }
 
+    }
+
+    private void FixedUpdate()
+    {
+
+        RaycastHit2D hit = Physics2D.Raycast(rayCastOrigin.position, Vector2.down, rayDis, 7);
+        if (hit.collider)
+        {
+            Debug.Log(hit.collider.name);
+            if ((hit.collider.tag == "floor") && jumpTimer <= 0)
+            {
+                Debug.Log("floor below, can jump");
+                //canJump = true;
+                jumpTimer = theTimer;
+                //haveDashed = false;
+                //haveSecondJump = false;
+
+                onFloor = true;
+                canDash = true;
+                hasJumpedOnce = false;
+
+                myBody.velocity = new Vector3(myBody.velocity.x, 0);
+            }
+            else
+            {
+                Debug.Log("can't jump");
+                onFloor = false;
+                //canDash = true;
+            }
+        }
+        else
+        {
+            Debug.Log("can't jump");
+            onFloor = false;
+            //canDash = true;
+        }
+        //}
     }
 
 }
