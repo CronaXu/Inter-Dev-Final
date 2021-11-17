@@ -9,8 +9,8 @@ public class PlayerMove : MonoBehaviour
     public float gravityMultiplier;
     public float dashSpeed;
 
-    bool onFloor;
-    bool jumpKeyReleased;
+    public bool onFloor;
+    public bool jumpKeyReleased;
     bool canDash;
    
     int dashCd;
@@ -82,6 +82,7 @@ public class PlayerMove : MonoBehaviour
         {
             jumpTimer -= Time.deltaTime;            //reset jumpTimer
         }
+        Debug.Log("jumpTimer:" + jumpTimer);
 
     }
 
@@ -229,10 +230,10 @@ public class PlayerMove : MonoBehaviour
             {
                 Debug.Log("floor below, can jump");
                 //canJump = true;
-                jumpTimer = theTimer;
+                //jumpTimer = theTimer;
                 //haveDashed = false;
                 //haveSecondJump = false;
-
+                jumpKeyReleased = true;
                 onFloor = true;
                 canDash = true;
                 hasJumpedOnce = false;
@@ -245,6 +246,12 @@ public class PlayerMove : MonoBehaviour
                 onFloor = false;
                 //canDash = true;
             }
+        }
+        else
+        {
+            Debug.Log("can't jump, no collider detected");
+            onFloor = false;
+            //canDash = true;
         }
 
     }
