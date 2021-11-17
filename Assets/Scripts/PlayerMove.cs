@@ -116,6 +116,8 @@ public class PlayerMove : MonoBehaviour
 
             jumpKeyReleased = false;
             hasJumpedOnce = true;
+
+            Debug.Log("firstJump");
         }
 
         if (Input.GetKey(KeyCode.Z) && hasJumpedOnce && jumpKeyReleased && !isDashing)   //double jump conditions
@@ -233,7 +235,7 @@ public class PlayerMove : MonoBehaviour
                 //jumpTimer = theTimer;
                 //haveDashed = false;
                 //haveSecondJump = false;
-                jumpKeyReleased = true;
+                //jumpKeyReleased = true;
                 onFloor = true;
                 canDash = true;
                 hasJumpedOnce = false;
