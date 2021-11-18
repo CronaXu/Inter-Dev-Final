@@ -22,6 +22,8 @@ public class checkManager : MonoBehaviour
     bool optionshow = false;
     public bool saved = false;
 
+    bool first = true;
+
     public int option = 0;
     GameObject newOptions;
     public GameObject optionObject;
@@ -77,8 +79,9 @@ public class checkManager : MonoBehaviour
         if (GetComponent<playerHealth>().respawn == true)
         {
             transform.position = new Vector3(SaveX, SaveY);
-            Debug.Log(new Vector3(SaveX, SaveY));
+            Debug.Log(new Vector3(SaveX, SaveY));                                                               //add anything that need to be reset after respawn
             GetComponent<playerHealth>().playerHealthstat = GetComponent<playerHealth>().myHealth;
+            GetComponent<playerHealth>().invinsibleTimer = GetComponent<playerHealth>().invinsibleT;
             //FindObjectOfType<playerInteract>().starCount = SaveSparkle;
             //FindObjectOfType<playerShoot>().bulletCount = SaveBullet;
             foreach (GameObject item in itemList)
@@ -126,6 +129,13 @@ public class checkManager : MonoBehaviour
                 Destroy(newChecker);
             }
         }
+        if(collision.gameObject.name == "firstCheck")
+        {
+            check = false;
+            triggerH = false;
+            checkered = false;
+            saveRecord = false;
+        }
     }
 
     private void sit()
@@ -145,8 +155,9 @@ public class checkManager : MonoBehaviour
     {
         if (checkered && option ==0)
         {
-            if ((Input.GetKey(KeyCode.Space) && !saved) || GetComponent<playerHealth>().respawned)
+            if (Input.GetKey(KeyCode.Space) && !saved)
             {
+                first = false;
                 saved = true;
                 Destroy(newChecker);
                 createOptions();
@@ -165,15 +176,18 @@ public class checkManager : MonoBehaviour
     
     private void createOptions()
     {
-        GetComponent<PlayerMove>().disableMove = true;
-        //player sit
-        Debug.Log("new options");
-        option = 1;
-        newOptions = Instantiate(optionObject, collObject.transform.position, collObject.transform.rotation);
-        newOptions.transform.localPosition = new Vector3(collObject.transform.position.x, collObject.transform.position.y + 6f); ///local position relative to checkpoint
-        newOptionsUI = Instantiate(optionObjectUI, collObject.transform.position, collObject.transform.rotation);
-        newOptionsUI.transform.localPosition = new Vector3(collObject.transform.position.x, collObject.transform.position.y + 7.72f); ///local position relative to checkpoint
-                //create new object
+        if (!first)
+        {
+            GetComponent<PlayerMove>().disableMove = true;
+            //player sit
+            Debug.Log("new options");
+            option = 1;
+            newOptions = Instantiate(optionObject, collObject.transform.position, collObject.transform.rotation);
+            newOptions.transform.localPosition = new Vector3(collObject.transform.position.x, collObject.transform.position.y + 6f); ///local position relative to checkpoint
+            newOptionsUI = Instantiate(optionObjectUI, collObject.transform.position, collObject.transform.rotation);
+            newOptionsUI.transform.localPosition = new Vector3(collObject.transform.position.x, collObject.transform.position.y + 7.72f); ///local position relative to checkpoint
+            //create new object
+        }
 
     }
 
