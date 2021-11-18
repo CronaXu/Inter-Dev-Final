@@ -36,8 +36,8 @@ public class PlayerMove : MonoBehaviour
     //public float test = 3;
     public float rayDis = 1;
     public Transform rayCastOrigin;
-    float jumpTimer = 0;
-    public float theTimer;
+   //float jumpTimer = 0;
+    //public float theTimer;
     public bool canJump = true;
 
 
@@ -46,6 +46,7 @@ public class PlayerMove : MonoBehaviour
     {
         myBody = gameObject.GetComponent<Rigidbody2D>();
         myRenderer = gameObject.GetComponent<SpriteRenderer>();
+        jumpKeyReleased = true;
         
     }
 
@@ -78,11 +79,11 @@ public class PlayerMove : MonoBehaviour
             speed = 12;
         }
 
-        if (jumpTimer > 0)
+        /*if (jumpTimer > 0)
         {
             jumpTimer -= Time.deltaTime;            //reset jumpTimer
         }
-        Debug.Log("jumpTimer:" + jumpTimer);
+        Debug.Log("jumpTimer:" + jumpTimer);*/
 
     }
 
@@ -126,6 +127,7 @@ public class PlayerMove : MonoBehaviour
 
             jumpKeyReleased = false;
             hasJumpedOnce = false;
+            Debug.Log("secondJump");
         }
 
 
@@ -228,7 +230,7 @@ public class PlayerMove : MonoBehaviour
         if (hit.collider)
         {
             Debug.Log(hit.collider.name);
-            if ((hit.collider.tag == "floor") && jumpTimer <= 0)
+            if ((hit.collider.tag == "floor") /*&& jumpTimer <= 0*/)
             {
                 Debug.Log("floor below, can jump");
                 //canJump = true;
@@ -238,9 +240,9 @@ public class PlayerMove : MonoBehaviour
                 //jumpKeyReleased = true;
                 onFloor = true;
                 canDash = true;
-                hasJumpedOnce = false;
+                //hasJumpedOnce = false;
 
-                myBody.velocity = new Vector3(myBody.velocity.x, 0);
+                //myBody.velocity = new Vector3(myBody.velocity.x, 0);
             }
             else
             {

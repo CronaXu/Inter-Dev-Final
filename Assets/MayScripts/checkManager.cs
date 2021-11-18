@@ -17,6 +17,8 @@ public class checkManager : MonoBehaviour
     bool triggerH = false;
     public bool checkered = false;
     public GameObject checkObject;
+
+    bool optionshow = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -117,7 +119,11 @@ public class checkManager : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Space))
             {
-
+                GetComponent<PlayerMove>().disableMove = true;
+                if (!optionshow)
+                {
+                    //instantiate two options
+                }
             }
         }
     }
