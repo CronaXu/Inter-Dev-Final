@@ -118,7 +118,7 @@ public class PlayerMove : MonoBehaviour
             jumpKeyReleased = false;
             hasJumpedOnce = true;
 
-            Debug.Log("firstJump");
+            //Debug.Log("firstJump");
         }
 
         if (Input.GetKey(KeyCode.Z) && hasJumpedOnce && jumpKeyReleased && !isDashing)   //double jump conditions
@@ -127,7 +127,7 @@ public class PlayerMove : MonoBehaviour
 
             jumpKeyReleased = false;
             hasJumpedOnce = false;
-            Debug.Log("secondJump");
+            //Debug.Log("secondJump");
         }
 
 
@@ -194,34 +194,19 @@ public class PlayerMove : MonoBehaviour
     }
 
 
-    void HandleConvMove()
+    void HandleConvMove()               //move player to the right during conversation
     {
         myPosX = transform.position.x;
         if ((myPosX- npcPosX) < 1f)
         {
             HandleLRMovement(speed);
             myRenderer.flipX = false;
-            //Debug.Log("move right");
         }if((myPosX - npcPosX) > 1f)
         {
             myRenderer.flipX = true;
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-
-        /*if (collision.gameObject.tag == "floor")    //check if is on floor
-        {
-            onFloor = true;
-            canDash = true;
-            hasJumpedOnce = false;
-
-            myBody.velocity = new Vector3(myBody.velocity.x, 0);
-
-        }*/
-
-    }
 
     private void FixedUpdate()
     {
@@ -229,31 +214,25 @@ public class PlayerMove : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(rayCastOrigin.position, Vector2.down, rayDis, 7);
         if (hit.collider)
         {
-            Debug.Log(hit.collider.name);
+            //Debug.Log(hit.collider.name);
             if ((hit.collider.tag == "floor") /*&& jumpTimer <= 0*/)
             {
-                Debug.Log("floor below, can jump");
-                //canJump = true;
-                //jumpTimer = theTimer;
-                //haveDashed = false;
-                //haveSecondJump = false;
-                //jumpKeyReleased = true;
+                //Debug.Log("floor below, can jump");
                 onFloor = true;
                 canDash = true;
                 //hasJumpedOnce = false;
-
                 //myBody.velocity = new Vector3(myBody.velocity.x, 0);
             }
             else
             {
-                Debug.Log("can't jump");
+                //Debug.Log("can't jump");
                 onFloor = false;
                 //canDash = true;
             }
         }
         else
         {
-            Debug.Log("can't jump, no collider detected");
+            //Debug.Log("can't jump, no collider detected");
             onFloor = false;
             //canDash = true;
         }
