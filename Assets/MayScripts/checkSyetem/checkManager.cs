@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class checkManager : MonoBehaviour
 {
-    float SaveX;
-    float SaveY;
+    public float SaveX;
+    public float SaveY;
     //int SaveSparkle;
     //int SaveBullet;
     bool check = false;
@@ -53,7 +53,9 @@ public class checkManager : MonoBehaviour
 
         options();
         checkerKey();
-        
+        respawnOptions();
+
+
 
         if (saved)
         {
@@ -72,9 +74,11 @@ public class checkManager : MonoBehaviour
         }
 
 
-        /*if (GetComponent<restart>().respawn == true)
+        if (GetComponent<playerHealth>().respawn == true)
         {
-            transform.position = new Vector3(SaveX + 2, SaveY);
+            transform.position = new Vector3(SaveX, SaveY);
+            Debug.Log(new Vector3(SaveX, SaveY));
+            GetComponent<playerHealth>().playerHealthstat = GetComponent<playerHealth>().myHealth;
             //FindObjectOfType<playerInteract>().starCount = SaveSparkle;
             //FindObjectOfType<playerShoot>().bulletCount = SaveBullet;
             foreach (GameObject item in itemList)
@@ -84,21 +88,21 @@ public class checkManager : MonoBehaviour
                 {
                     item.GetComponent<enemyBehavior>().added = false;
                     item.GetComponent<enemyBehavior>().enemyHealth = item.GetComponent<enemyBehavior>().myHealth;
-                    if (item.name == "movingEnemy")
+                    /*if (item.name == "movingEnemy")
                     {
                         item.GetComponent<enemyBehavior>().enemyHealth = 1;
-                    }
+                    }*/
                 }
             }
-            GetComponent<restart>().respawn = false;
-        }*/
+            GetComponent<playerHealth>().respawn = false;
+        }
 
 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "checkpoint")
+        if (collision.gameObject.tag == "checkpoint" && !GetComponent<playerHealth>().respawnBack)
         {
             Debug.Log("checkpoint");
             check = true;
@@ -116,6 +120,7 @@ public class checkManager : MonoBehaviour
             saveRecord = false;
             saved = false;
             option = 0;
+            GetComponent<playerHealth>().respawnBack = false;
             if (newChecker != null)
             {
                 Destroy(newChecker);
@@ -140,28 +145,36 @@ public class checkManager : MonoBehaviour
     {
         if (checkered && option ==0)
         {
-            if (Input.GetKey(KeyCode.Space) && !saved)
+            if ((Input.GetKey(KeyCode.Space) && !saved) || GetComponent<playerHealth>().respawned)
             {
-                GetComponent<PlayerMove>().disableMove = true;
-                //player sit
                 saved = true;
                 Destroy(newChecker);
-                Debug.Log("new options");
-                option = 1;
-                newOptions = Instantiate(optionObject, collObject.transform.position, collObject.transform.rotation);
-                newOptions.transform.localPosition = new Vector3(collObject.transform.position.x, collObject.transform.position.y + 6f); ///local position relative to checkpoint
-                newOptionsUI = Instantiate(optionObjectUI, collObject.transform.position, collObject.transform.rotation);
-                newOptionsUI.transform.localPosition = new Vector3(collObject.transform.position.x, collObject.transform.position.y + 7.72f); ///local position relative to checkpoint
-                //create new object
-
-
-
-                if (!optionshow)
-                {
-                    //instantiate three options
-                }
+                createOptions();
             }
         }
+    }
+
+    private void respawnOptions()
+    {
+        if (GetComponent<playerHealth>().respawned)
+        {
+            GetComponent<playerHealth>().respawned = false;
+            createOptions();
+        }
+    }
+    
+    private void createOptions()
+    {
+        GetComponent<PlayerMove>().disableMove = true;
+        //player sit
+        Debug.Log("new options");
+        option = 1;
+        newOptions = Instantiate(optionObject, collObject.transform.position, collObject.transform.rotation);
+        newOptions.transform.localPosition = new Vector3(collObject.transform.position.x, collObject.transform.position.y + 6f); ///local position relative to checkpoint
+        newOptionsUI = Instantiate(optionObjectUI, collObject.transform.position, collObject.transform.rotation);
+        newOptionsUI.transform.localPosition = new Vector3(collObject.transform.position.x, collObject.transform.position.y + 7.72f); ///local position relative to checkpoint
+                //create new object
+
     }
 
     private void options()
@@ -191,6 +204,7 @@ public class checkManager : MonoBehaviour
                     Debug.Log("leave");
                     GetComponent<PlayerMove>().disableMove = false;
                     option = 0;
+                    
                 }
             }
 
