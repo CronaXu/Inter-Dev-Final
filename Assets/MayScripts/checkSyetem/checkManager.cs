@@ -140,7 +140,7 @@ public class checkManager : MonoBehaviour
 
     private void sit()
     {
-        if (check)
+        if (check &&!checkered)
         {
             Debug.Log("checked");
             //Debug.Log(collObject.transform.position);
