@@ -18,7 +18,7 @@ public class CameraMove : MonoBehaviour
     Vector3 smoothPos;
     public float smoothRate;
 
-    float ychange;
+    public float ychange;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +38,13 @@ public class CameraMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(Globals.)
+        if (PlayerMove.Globals.CamOnfloor)
+        {
+            ychange = 2f;
+        }else if (PlayerMove.Globals.CamOnplatform)
+        {
+            ychange = -2f;
+        }
 
          
     }

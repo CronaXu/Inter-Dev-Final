@@ -261,7 +261,7 @@ public class PlayerMove : MonoBehaviour
                 canDash = true;
                 Globals.CamOnfloor = true;
                 Globals.CamOnplatform = false;
-            }if(hit.collider.tag == "platform")
+            }else if(hit.collider.tag == "platform")
             {
                 onFloor = true;
                 canDash = true;
