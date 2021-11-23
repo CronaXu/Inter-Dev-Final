@@ -254,14 +254,22 @@ public class PlayerMove : MonoBehaviour
         if (hit.collider)
         {
             Debug.Log(hit.collider.name);
-            if ((hit.collider.tag == "floor") /*&& jumpTimer <= 0*/)
+            if (hit.collider.tag == "floor")
             {
                 //Debug.Log("floor below, can jump");
                 onFloor = true;
                 canDash = true;
-                //hasJumpedOnce = false;
-                //myBody.velocity = new Vector3(myBody.velocity.x, 0);
+                Globals.CamOnfloor = true;
+                Globals.CamOnplatform = false;
+            }if(hit.collider.tag == "platform")
+            {
+                onFloor = true;
+                canDash = true;
+                Globals.CamOnfloor = false;
+                Globals.CamPlatformY = transform.position.y;
+                Globals.CamOnplatform = true;
             }
+
             else
             {
                 //Debug.Log("can't jump");
@@ -278,6 +286,13 @@ public class PlayerMove : MonoBehaviour
 
 
 
+    }
+
+    public static class Globals
+    {
+        public static bool CamOnfloor = false;
+        public static bool CamOnplatform = false;
+        public static float CamPlatformY;
     }
 
 }
