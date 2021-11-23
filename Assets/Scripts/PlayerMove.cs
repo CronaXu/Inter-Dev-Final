@@ -32,6 +32,8 @@ public class PlayerMove : MonoBehaviour
 
     SpriteRenderer myRenderer;
 
+    public Animator PlayerAnimator;
+
 
     //public float test = 3;
     public float rayDis = 1;
@@ -53,7 +55,21 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (onFloor && myBody.velocity.y > 0.1)
+
+        if (myBody.velocity.y < 0 && !onFloor && !isDashing)
+        {
+            PlayerAnimator.SetBool("isJumpUp", false);
+            PlayerAnimator.SetBool("isJumpDown", true);
+            PlayerAnimator.SetBool("isStanding", false);
+            //PlayerAnimator.SetBool("isWalking", false);
+        }else if (myBody.velocity.y > 0 && !onFloor && !isDashing)
+        {
+            PlayerAnimator.SetBool("isJumpUp", true);
+            PlayerAnimator.SetBool("isJumpDown", false);
+            PlayerAnimator.SetBool("isStanding", false);
+        }
+
+            if (onFloor && myBody.velocity.y > 0.1)
         {
             onFloor = false;
         }
@@ -77,6 +93,8 @@ public class PlayerMove : MonoBehaviour
         else
         {
             speed = 12;
+            PlayerAnimator.SetBool("isJumpUp", false);
+            PlayerAnimator.SetBool("isJumpDown", false);
         }
 
         /*if (jumpTimer > 0)
@@ -89,16 +107,29 @@ public class PlayerMove : MonoBehaviour
 
     void CheckKeys()
     {
+
+
         if (Input.GetKey(KeyCode.RightArrow) && !isDashing)     //left right movement
         {
             myRenderer.flipX = false;
+            PlayerAnimator.SetBool("isWalking", true);
+            PlayerAnimator.SetBool("isStanding", false);
+
             HandleLRMovement(speed);
         }
         else if (Input.GetKey(KeyCode.LeftArrow) && !isDashing)
         {
             myRenderer.flipX = true;
+            PlayerAnimator.SetBool("isWalking", true);
+            PlayerAnimator.SetBool("isStanding", false);
+
             HandleLRMovement(-speed);
 
+        }
+        else
+        {
+            PlayerAnimator.SetBool("isWalking", false);
+            PlayerAnimator.SetBool("isStanding", true);
         }
 
         if (Input.GetKeyUp(KeyCode.Z))   //fall when jump key released
@@ -117,8 +148,13 @@ public class PlayerMove : MonoBehaviour
 
             jumpKeyReleased = false;
             hasJumpedOnce = true;
-
+            //Debug.Log("jump time:" + Time.deltaTime);
             //Debug.Log("firstJump");
+            PlayerAnimator.SetBool("isJumpUp", true);
+            PlayerAnimator.SetBool("isJumpDown", false);
+            PlayerAnimator.SetBool("isStanding", false);
+            //PlayerAnimator.SetBool("isWalking", false);
+
         }
 
         if (Input.GetKey(KeyCode.Z) && hasJumpedOnce && jumpKeyReleased && !isDashing)   //double jump conditions
@@ -128,6 +164,10 @@ public class PlayerMove : MonoBehaviour
             jumpKeyReleased = false;
             hasJumpedOnce = false;
             //Debug.Log("secondJump");
+            PlayerAnimator.SetBool("isJumpUp", true);
+            PlayerAnimator.SetBool("isJumpDown", false);
+            PlayerAnimator.SetBool("isStanding", false);
+            //PlayerAnimator.SetBool("isWalking", false);
         }
 
 
@@ -138,7 +178,6 @@ public class PlayerMove : MonoBehaviour
                 if (!myRenderer.flipX)
                 {
                     StartCoroutine(Dash(1));
-
                 }
                 else
                 {
@@ -214,7 +253,7 @@ public class PlayerMove : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(rayCastOrigin.position, Vector2.down, rayDis, 7);
         if (hit.collider)
         {
-            //Debug.Log(hit.collider.name);
+            Debug.Log(hit.collider.name);
             if ((hit.collider.tag == "floor") /*&& jumpTimer <= 0*/)
             {
                 //Debug.Log("floor below, can jump");
@@ -236,6 +275,8 @@ public class PlayerMove : MonoBehaviour
             onFloor = false;
             //canDash = true;
         }
+
+
 
     }
 
