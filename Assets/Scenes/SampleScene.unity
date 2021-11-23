@@ -566,7 +566,7 @@ GameObject:
   - component: {fileID: 300455050}
   m_Layer: 0
   m_Name: floor (1)
-  m_TagString: floor
+  m_TagString: platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1007,6 +1007,7 @@ MonoBehaviour:
   followTransform: {fileID: 1733815213}
   worldBounds: {fileID: 1758521040}
   smoothRate: 0.4
+  ychange: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -2541,6 +2542,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d9fae9a801c427ab21e66c2954360e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  energy: 1
+  enToLife: 0.25
+  timer: 0
 --- !u!1 &1758521039
 GameObject:
   m_ObjectHideFlags: 0
