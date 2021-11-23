@@ -18,7 +18,6 @@ public class CameraMove : MonoBehaviour
     Vector3 smoothPos;
     public float smoothRate;
 
-    public float ychange;
 
     // Start is called before the first frame update
     void Start()
@@ -38,21 +37,34 @@ public class CameraMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PlayerMove.Globals.CamOnfloor)
-        {
-            ychange = 2f;
-        }else if (PlayerMove.Globals.CamOnplatform)
-        {
-            ychange = -2f;
-        }//else if (PlayerMove.Globals)
+        
 
          
     }
 
     void FixedUpdate()
     {
+        if (PlayerMove.Globals.CamOnfloor)
+        {
+            camY = Mathf.Clamp(PlayerMove.Globals.CamFloorY + 4f, yMin + camSize, yMax - camSize);
+        }
+        /*else if (PlayerMove.Globals.CamOnplatform)
+        {
+            camY = Mathf.Clamp(PlayerMove.Globals.CamPlatformY, yMin + camSize, yMax - camSize);
+        }*/
+        else if (PlayerMove.Globals.CamInair)
+        {
+            if (PlayerMove.Globals.jumpDistance > 4f)
+            {
+                camY = Mathf.Clamp(PlayerMove.Globals.CamFloorY + PlayerMove.Globals.jumpDistance, yMin + camSize, yMax - camSize);
+            }
+            else
+            {
+                camY = Mathf.Clamp(PlayerMove.Globals.CamFloorY + 4f, yMin + camSize, yMax - camSize);
+            }
+        }
 
-        camY = Mathf.Clamp(followTransform.position.y + 2f+ ychange, yMin + camSize, yMax - camSize);
+        
         camX = Mathf.Clamp(followTransform.position.x + 0, xMin + camRatio, xMax - camRatio);
 
         smoothPos = Vector3.Lerp(gameObject.transform.position, new Vector3(camX, camY, gameObject.transform.position.z), smoothRate);

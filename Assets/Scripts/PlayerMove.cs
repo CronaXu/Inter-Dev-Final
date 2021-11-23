@@ -10,6 +10,7 @@ public class PlayerMove : MonoBehaviour
     public float dashSpeed;
 
     public bool onFloor;
+    public bool onPlatform;
     public bool jumpKeyReleased;
     bool canDash;
    
@@ -58,7 +59,7 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (onFloor)
+        if (onFloor && !onPlatform)
         {
             onfloorY = transform.position.y;
         }
@@ -270,30 +271,41 @@ public class PlayerMove : MonoBehaviour
                 //Debug.Log("floor below, can jump");
                 onFloor = true;
                 canDash = true;
+                onPlatform = false;
                 Globals.CamOnfloor = true;
                 Globals.CamOnplatform = false;
                 Globals.CamInair = false;
+                Globals.CamFloorY = transform.position.y;
             }
             else if(hit.collider.tag == "platform")
             {
                 onFloor = true;
                 canDash = true;
-                Globals.CamOnfloor = false;
+                onPlatform = true;
+                /*Globals.CamOnfloor = false;
                 Globals.CamPlatformY = transform.position.y;
                 Globals.CamOnplatform = true;
-                Globals.CamInair = false;
+                Globals.CamInair = false;*/
             } 
 
             else
             {
                 //Debug.Log("can't jump");
+                onPlatform = false;
                 Globals.CamInair = true;
+                Globals.CamOnfloor = false;
+                Globals.CamOnplatform = false;
                 onFloor = false;
+                
                 //canDash = true;
             }
         }
         else
         {
+            onPlatform = false;
+            Globals.CamInair = true;
+            Globals.CamOnfloor = false;
+            Globals.CamOnplatform = false;
             //Debug.Log("can't jump, no collider detected");
             onFloor = false;
             //canDash = true;
@@ -310,6 +322,7 @@ public class PlayerMove : MonoBehaviour
         public static float CamPlatformY;
         public static bool CamInair = false;
         public static float jumpDistance;
+        public static float CamFloorY;
     }
 
 }

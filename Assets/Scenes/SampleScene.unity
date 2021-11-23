@@ -1006,7 +1006,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followTransform: {fileID: 1733815213}
   worldBounds: {fileID: 1758521040}
-  smoothRate: 0.4
+  smoothRate: 0.3
   ychange: 0
 --- !u!20 &519420031
 Camera:
@@ -2349,6 +2349,7 @@ MonoBehaviour:
   gravityMultiplier: 1.5
   dashSpeed: 26
   onFloor: 0
+  onPlatform: 0
   jumpKeyReleased: 0
   npcPosX: 0
   disableMove: 0
