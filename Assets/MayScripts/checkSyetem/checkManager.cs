@@ -169,8 +169,9 @@ public class checkManager : MonoBehaviour
     {
         if (GetComponent<playerHealth>().respawned)
         {
-            GetComponent<playerHealth>().respawned = false;
             createOptions();
+            GetComponent<playerHealth>().respawned = false;
+            
         }
     }
     
