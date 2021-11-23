@@ -44,7 +44,7 @@ public class CameraMove : MonoBehaviour
         }else if (PlayerMove.Globals.CamOnplatform)
         {
             ychange = -2f;
-        }
+        }//else if (PlayerMove.Globals)
 
          
     }
