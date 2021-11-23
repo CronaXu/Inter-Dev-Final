@@ -6,6 +6,7 @@ public class playerEnergy : MonoBehaviour
 {
     public float energy = 1;
     public float enToLife = 0.25f;
+    public float timer = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -18,13 +19,29 @@ public class playerEnergy : MonoBehaviour
     {
         if (energy >= enToLife)
         {
-
+            energyToLife();
         }
     }
 
     void energyToLife()
     {
-        if (Input.GetKey(KeyCode.A)) { }
+        if (Input.GetKey(KeyCode.A))
+        {
+            timer += Time.deltaTime;
+        }
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            if (timer < 1)
+            {
+                Debug.Log("charged Shot");
+            }
+            if (timer > 1)
+            {
+                Debug.Log("get Health");
+            }
+            timer = 0;
+
+        }
 
     }
 }

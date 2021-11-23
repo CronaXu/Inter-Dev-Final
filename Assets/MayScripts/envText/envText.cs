@@ -50,7 +50,7 @@ public class envText : MonoBehaviour
         if (fadeComplete == false && fadingText.color.a < 1.0f)
         {
             fadingText.color = new Color(fadingText.color.r, fadingText.color.g, fadingText.color.b, fadingText.color.a + (Time.deltaTime * fadeSpeed));
-            Debug.Log(fadingText.color.a);
+            //Debug.Log(fadingText.color.a);
         }
         if (fadingText.color.a >= 1.0f)
         {
