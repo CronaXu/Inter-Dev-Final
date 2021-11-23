@@ -41,6 +41,9 @@ public class PlayerMove : MonoBehaviour
    //float jumpTimer = 0;
     //public float theTimer;
     public bool canJump = true;
+    float onfloorY;
+    float jumpY;
+
 
 
     // Start is called before the first frame update
@@ -55,7 +58,15 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (onFloor)
+        {
+            onfloorY = transform.position.y;
+        }
+        if (!onFloor)
+        {
+            jumpY = transform.position.y;
+            Globals.jumpDistance = jumpY - onfloorY;
+        }
         if (myBody.velocity.y < 0 && !onFloor && !isDashing)
         {
             PlayerAnimator.SetBool("isJumpUp", false);
@@ -261,18 +272,22 @@ public class PlayerMove : MonoBehaviour
                 canDash = true;
                 Globals.CamOnfloor = true;
                 Globals.CamOnplatform = false;
-            }else if(hit.collider.tag == "platform")
+                Globals.CamInair = false;
+            }
+            else if(hit.collider.tag == "platform")
             {
                 onFloor = true;
                 canDash = true;
                 Globals.CamOnfloor = false;
                 Globals.CamPlatformY = transform.position.y;
                 Globals.CamOnplatform = true;
-            }
+                Globals.CamInair = false;
+            } 
 
             else
             {
                 //Debug.Log("can't jump");
+                Globals.CamInair = true;
                 onFloor = false;
                 //canDash = true;
             }
@@ -293,6 +308,8 @@ public class PlayerMove : MonoBehaviour
         public static bool CamOnfloor = false;
         public static bool CamOnplatform = false;
         public static float CamPlatformY;
+        public static bool CamInair = false;
+        public static float jumpDistance;
     }
 
 }
