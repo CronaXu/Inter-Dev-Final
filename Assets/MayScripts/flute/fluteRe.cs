@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class fluteSystem : MonoBehaviour
+public class fluteRe : MonoBehaviour
 {
     public AudioSource audioSource;
 
@@ -10,7 +10,7 @@ public class fluteSystem : MonoBehaviour
     public float attackTime;
     public float releaseTime;
 
-    public KeyCode keyToPlay = KeyCode.A;
+    public KeyCode keyToPlay = KeyCode.S;
 
 
     public enum ASRState { inactive = 0, attack, sustain, release }
