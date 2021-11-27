@@ -19,7 +19,7 @@ public class checkManager : MonoBehaviour
     public GameObject checkObject;
 
     public bool saveRecord = false;
-    bool optionshow = false;
+    //bool optionshow = false;
     public bool saved = false;
 
     bool first = true;
@@ -29,6 +29,7 @@ public class checkManager : MonoBehaviour
     public GameObject optionObject;
     GameObject newOptionsUI;
     public GameObject optionObjectUI;
+    public GameObject fluteManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -213,6 +214,7 @@ public class checkManager : MonoBehaviour
                 if (option == 2)
                 {
                     Debug.Log("play flute");
+
                 }
                 if (option == 3)
                 {
