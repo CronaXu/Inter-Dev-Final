@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class playerEnergy : MonoBehaviour
 {
     public float energy = 1;
+    public float enToCharge = 0.25f;
     public float enToLife = 0.25f;
     public float timer = 0;
+
+    public Image energyUI;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +21,8 @@ public class playerEnergy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (energy >= enToLife)
+        energyUI.fillAmount = energy;
+        if (energy >= enToLife)     //have energy to consume
         {
             energyToLife();
         }
@@ -34,13 +39,15 @@ public class playerEnergy : MonoBehaviour
             if (timer < 1)
             {
                 Debug.Log("charged Shot");
+                energy -= enToCharge;
             }
-            if (timer > 1)
+            if (timer > 1 && GetComponent<playerHealth>().playerHealthstat< GetComponent<playerHealth>().myHealth)
             {
                 Debug.Log("get Health");
+                energy -= enToLife;
+                GetComponent<playerHealth>().playerHealthstat++;
             }
             timer = 0;
-
         }
 
     }
